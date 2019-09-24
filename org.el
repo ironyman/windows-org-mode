@@ -1,6 +1,8 @@
 ;; on windows, .emacs goes in $env:USERPROFILE\AppData\Roaming
 ;; emacs options
 (menu-bar-mode -1)
+(tool-bar-mode -1
+; (toggle-scroll-bar -1)
 
 ;; org
 (require 'org)
@@ -14,6 +16,7 @@
 
 (setq org-use-speed-commands t)
 
+
 (defun org-find-file ()
   (interactive)
   (find-file org-directory))
@@ -23,8 +26,14 @@
 
 
 ;; (setq org-agenda-files (list org-directory))
-;; This is supposed to be recursive?
+;; This is supposed to be recursive.
 (setq org-agenda-files (directory-files-recursively org-directory "\.org$"))
+;; Reload org-agenda-files when new file is created.
+(defun org-reload-agenda-files ()
+  (setq org-agenda-files (directory-files-recursively org-directory "\.org$")))
+(add-hook 'org-mode-hook 
+          (lambda () 
+             (add-hook 'after-save-hook 'org-reload-agenda-files)))
 
 (setq-default buffer-file-coding-system 'utf-8-unix)
 
