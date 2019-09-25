@@ -1,7 +1,8 @@
 ;; on windows, .emacs goes in $env:USERPROFILE\AppData\Roaming
 ;; emacs options
 (menu-bar-mode -1)
-(tool-bar-mode -1
+(tool-bar-mode -1)
+	       
 ; (toggle-scroll-bar -1)
 
 ;; org
@@ -31,7 +32,11 @@
 ;; Reload org-agenda-files when new file is created.
 (defun org-reload-agenda-files ()
   (setq org-agenda-files (directory-files-recursively org-directory "\.org$")))
-(add-hook 'org-mode-hook 
+(add-hook 'org-mode-hook
+	  ; (visual-line-mode)
+	  ;; hard line wrap
+	  (auto-fill-mode)
+	  (setq-default fill-column 80)
           (lambda () 
              (add-hook 'after-save-hook 'org-reload-agenda-files)))
 
