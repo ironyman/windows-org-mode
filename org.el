@@ -5,6 +5,32 @@
 	       
 ; (toggle-scroll-bar -1)
 
+;; Disable bell
+(setq ring-bell-function 'ignore)
+
+;; toggle search case fold
+(add-hook 'isearch-mode-hook
+            (function
+             (lambda ()
+               (define-key isearch-mode-map "\C-h" 'isearch-mode-help)
+               (define-key isearch-mode-map "\C-t" 'isearch-toggle-regexp)
+               (define-key isearch-mode-map "\C-c" 'isearch-toggle-case-fold)
+               (define-key isearch-mode-map "\C-j" 'isearch-edit-string))))
+
+;; Recent files
+(recentf-mode 1)
+(setq recentf-max-menu-items 250)
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+
+;; Custom file :(
+(setq custom-file "~/.emacs.d/custom.el")
+
+;; Save history
+(setq savehist-additional-variables    ;; also save...
+  '(search-ring regexp-search-ring)    ;; ... my search entries
+  savehist-file "~/.emacs.d/savehist") ;; keep my home clean
+(savehist-mode t)                      ;; do customization before activate
+
 ;; org
 (require 'org)
 (setq org-directory (concat (getenv "USERPROFILE") "\\OneDrive - Microsoft\\org"))
@@ -28,12 +54,12 @@
 
 ;; (setq org-agenda-files (list org-directory))
 ;; This is supposed to be recursive.
-(setq org-agenda-files (directory-files-recursively org-directory "\.org$"))
+(setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
 ;; Reload org-agenda-files when new file is created.
 (defun org-reload-agenda-files ()
-  (setq org-agenda-files (directory-files-recursively org-directory "\.org$")))
+  (setq org-agenda-files (directory-files-recursively org-directory "\\.org$")))
 (add-hook 'org-mode-hook
-	  ; (visual-line-mode)
+	  ;; (visual-line-mode)
 	  ;; hard line wrap
 	  (auto-fill-mode)
 	  (setq-default fill-column 80)
@@ -92,19 +118,3 @@
 ;; Highlighting in code blocks
 (setq org-src-fontify-natively t)
 
-;; Disable bell
-(setq ring-bell-function 'ignore)
-
-;; toggle search case fold
-(add-hook 'isearch-mode-hook
-            (function
-             (lambda ()
-               (define-key isearch-mode-map "\C-h" 'isearch-mode-help)
-               (define-key isearch-mode-map "\C-t" 'isearch-toggle-regexp)
-               (define-key isearch-mode-map "\C-c" 'isearch-toggle-case-fold)
-               (define-key isearch-mode-map "\C-j" 'isearch-edit-string))))
-
-;; Recent files
-(recentf-mode 1)
-(setq recentf-max-menu-items 250)
-(global-set-key "\C-x\ \C-r" 'recentf-open-files)
