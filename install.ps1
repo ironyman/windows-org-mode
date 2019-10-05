@@ -1,3 +1,4 @@
 $configFile = "$env:USERPROFILE\AppData\Roaming\.emacs"
-$content = "(load `"$PSScriptRoot\\org.el`")"
+$escapedRoot = $PSScriptRoot -replace "\\", "\\"
+$content = "(load `"$escapedRoot\\org.el`")"
 Add-Content $configFile $content
