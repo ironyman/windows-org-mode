@@ -3,7 +3,11 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 	       
-; (toggle-scroll-bar -1)
+;; (toggle-scroll-bar -1)
+
+;; Show highlights while scrolling. 'unlimited is only available
+;; on HEAD. But non-nil is supported on choco's emacs. 
+(setq isearch-allow-scroll 'unlimited)
 
 ;; Disable bell
 (setq ring-bell-function 'ignore)
