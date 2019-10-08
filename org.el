@@ -5,10 +5,6 @@
 	       
 ;; (toggle-scroll-bar -1)
 
-;; Show highlights while scrolling. 'unlimited is only available
-;; on HEAD. But non-nil is supported on choco's emacs. 
-(setq isearch-allow-scroll 'unlimited)
-
 ;; Disable bell
 (setq ring-bell-function 'ignore)
 
@@ -20,6 +16,10 @@
                (define-key isearch-mode-map "\C-t" 'isearch-toggle-regexp)
                (define-key isearch-mode-map "\C-c" 'isearch-toggle-case-fold)
                (define-key isearch-mode-map "\C-j" 'isearch-edit-string))))
+
+;; Show highlights while scrolling. 'unlimited is only available
+;; on HEAD. But non-nil is supported on choco's emacs. 
+(setq isearch-allow-scroll 'unlimited)
 
 ;; Recent files
 (recentf-mode 1)
@@ -63,11 +63,11 @@
 (defun org-reload-agenda-files ()
   (setq org-agenda-files (directory-files-recursively org-directory "\\.org$")))
 (add-hook 'org-mode-hook
-	  ;; (visual-line-mode)
-	  ;; hard line wrap
-	  (auto-fill-mode)
-	  (setq-default fill-column 80)
-          (lambda () 
+          '(lambda ()
+	     ;; (visual-line-mode)
+	     ;; hard line wrap
+	     (auto-fill-mode)
+	     (setq-default fill-column 80)
              (add-hook 'after-save-hook 'org-reload-agenda-files)))
 
 (setq-default buffer-file-coding-system 'utf-8-unix)
